@@ -1,6 +1,6 @@
 from dadi import Numerics, PhiManip, Integration, Spectrum
 
-def simpleCanary((nuIb0, nuIb, nuMo0, nuMo, nuCa0, TIbMo, TMoCa),
+def simple_canary((nuIb0, nuIb, nuMo0, nuMo, nuCa0, TIbMo, TMoCa),
     ns, pts):
     """
     nuIb0: starting Iberian population size
