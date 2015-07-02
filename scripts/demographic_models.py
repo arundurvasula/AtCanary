@@ -8,7 +8,6 @@ def simple_canary((nuIb0, nuIb, nuMo0, nuMo, nuCa0, TIbMo, TMoCa, TF),
     nuMo0: starting Moroccan population size
     nuMo: ending Morrocan population size
     nuCa0: starting Canary island population size
-    nuCa: ending Canary island population size
     TIbMo: split time for Iberian and Moroccan populations
     TMoCa: split time for Moroccan and Canary island populations
     TF: simulation ending time
@@ -17,9 +16,7 @@ def simple_canary((nuIb0, nuIb, nuMo0, nuMo, nuCa0, TIbMo, TMoCa, TF),
 
     phi = PhiManip.phi_1D(xx)
     phi = Integration.one_pop(phi, xx, TIbMo, nu=nuIb0)
-    print phi
-    print TIbMo
-    print xx
+
     phi = PhiManip.phi_1D_to_2D(xx, phi)
     phi = Integration.two_pops(phi, xx, TMoCa, nu1=nuIb, nu2=nuMo0)
 
@@ -39,7 +36,6 @@ def simple_canary_migration((nuIb0, nuIb, nuMo0, nuMo, nuCa0, TIbMo, TMoCa, mIbC
     nuMo0: starting Moroccan population size
     nuMo: ending Morrocan population size
     nuCa0: starting Canary island population size
-    nuCa: ending Canary island population size
     TIbMo: split time for Iberian and Moroccan populations
     TMoCa: split time for Moroccan and Canary island populations
     mIbCa: migration rate from Ib to Ca
