@@ -15,19 +15,23 @@ scripts:
 # Simple Canary Island Model
 This model is just a 3 population split with no migration. Instantaneous population size changes.
 
+```
     |
      ----
     |    |
     |     ----
     |    |    |
     S    M    C
+```
 
 # Simple Canary Island Model with migration
 This model is just a 3 population split with migration. Instantaneous population size changes.
 
+```
     |
      ----
     |    |
     |     ----
     |====|===>|
     S    M    C
+```
