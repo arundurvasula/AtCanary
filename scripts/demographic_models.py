@@ -58,7 +58,7 @@ def simple_canary_migration((nuIb0, nuIb, nuMo0, nuMo, nuCa0, TIbMo, TMoCa, mIbC
 
 def two_step((nMo, nCa, T1, T2, T3), ns, pts):
     """
-    nMo: Moroccon constant population size
+    nMo: Moroccan constant population size
     nCa: Canary Island constant population size
     T1: time for first split (Iberia to Iberia and Morocco)
     T2: time for second split (Morocco to Morocco and Canary)
@@ -80,7 +80,7 @@ def two_step((nMo, nCa, T1, T2, T3), ns, pts):
 
 def two_step_migration((nMo, nCa, mIbCa, T1, T2), ns, pts):
     """
-    nMo: Moroccon constant population size
+    nMo: Moroccan constant population size
     nCa: Canary Island constant population size
     T1: time for first split (Iberia to Iberia and Morocco)
     T2: time for second split (Morocco to Morocco and Canary)
@@ -88,7 +88,6 @@ def two_step_migration((nMo, nCa, mIbCa, T1, T2), ns, pts):
     xx = Numerics.default_grid(pts)
 
     phi = PhiManip.phi_1D(xx)
-#    phi = Integration.one_pop(phi, xx, T1, nu=1)
 
     phi = PhiManip.phi_1D_to_2D(xx, phi)
     phi = Integration.two_pops(phi, xx, T1, nu1=1, nu2=nMo)
@@ -97,5 +96,56 @@ def two_step_migration((nMo, nCa, mIbCa, T1, T2), ns, pts):
     phi = Integration.three_pops(phi, xx, T2, nu1=1, nu2=nMo, nu3=nCa, m13=mIbCa)
 
     fs = Spectrum.from_phi(phi, ns, (xx, xx, xx))
+
+    return fs
+
+def Mo_Ib((nIb, nMo1, nMo2, T1), ns, pts):
+    """
+    nIb: Iberian constant population size
+    nMo1: starting Moroccan size
+    nMo2: ending Moroccan size
+    T1: Time to first split
+    This model doesn't consider the Canary Island population size or split time.
+    """
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    phi = Integration.two_pops(phi, xx, T1, nu1=nIb, nu2=nMo1)
+
+    nu_funcMo = lambda t: (nMo2-1) * (t/T1) + 1
+
+    phi = PhiManip.phi_2D_to_3D_split_2(xx, phi)
+    phi = Integration.three_pops(phi, xx, 1, nu1=nIb, nu2=nu_funcMo, nu3=1, m13=0.2)
+
+    fs = Spectrum.from_phi(phi, ns, (xx, xx, xx))
+
+    return fs
+
+def moroccoIberia_migration((nuIb, nuMo, nuCa, TIbMo, TMoCa, mIbMo, mMoIb, mMoCa),
+    ns, pts):
+    """
+    nuIb: Iberian population size
+    nuMo: Moroccan population size
+    nuCa: Canary population size
+    TIbMo: split time for Iberian and Moroccan populations
+    TMoCa: split time for Moroccan and Canary populations
+    mIbmo: migration rate from Ib to Mo
+    mMoIb: migration rate from Mo to Ib
+    mMoCa: migration rate from Mo to Ca
+    """
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    phi = Integration.two_pops(phi, xx, TIbMo, nu1=nuIb, nu2=nuMo, m12=mIbMo, m21=mMoIb)
+
+    phi = PhiManip.phi_2D_to_3D_split_2(xx, phi)
+    phi = Integration.three_pops(phi, xx, TMoCa, nu1=nuIb, nu2=nuMo, nu3=nuCa, m13=mMoCa)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx,xx))
 
     return fs
