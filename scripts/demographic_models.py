@@ -124,6 +124,26 @@ def Mo_Ib((nIb, nMo1, nMo2, T1), ns, pts):
 
     return fs
 
+def moroccoIberia_migration_Andrea((nuIb, nuMo, TIbMo, mIbMo, mMoIb), 
+    ns, pts):
+    """
+    nuIb: Iberian population size
+    nuMo: Moroccan population size
+    TIbMo: split time for Iberian and Moroccan populations
+    mIbmo: migration rate from Ib to Mo
+    mMoIb: migration rate from Mo to Ib
+    """
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    phi = Integration.two_pops(phi, xx, TIbMo, nu1=nuIb, nu2=nuMo, m12=mIbMo, m21=mMoIb)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+
+    return fs
+
 def moroccoIberia_migration((nuIb, nuMo, nuCa, TIbMo, TMoCa, mIbMo, mMoIb, mMoCa),
     ns, pts):
     """
