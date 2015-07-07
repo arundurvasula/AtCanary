@@ -1,5 +1,7 @@
 #!/bin/bash
-
+#$ -cwd
+#$ -j y
+# run from ~/AtCanary
 set -e
 set -u
 

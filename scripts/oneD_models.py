@@ -36,3 +36,17 @@ def bottleneck((nuB, nuF, TB, TF), ns, pts):
 
     fs = Spectrum.from_phi(phi, ns, (xx,))
     return fs
+
+def bottleneck_exp((nuB, nuF, TB, TF), ns, pts):
+    """Try to fit the canary island with this"""
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    phi = Integration.one_pop(phi, xx, TB, nuB)
+
+    nu_func = lambda t: numpy.exp(numpy.log(nuF) * t/TF)
+    phi = Integration.one_pop(phi, xx, TF, nu_func)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,))
+    return fs

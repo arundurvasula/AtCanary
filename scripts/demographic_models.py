@@ -124,7 +124,7 @@ def Mo_Ib((nIb, nMo1, nMo2, T1), ns, pts):
 
     return fs
 
-def moroccoIberia_migration_Andrea((nuIb, nuMo, TIbMo, mIbMo, mMoIb), 
+def moroccoIberia_migration_Andrea((nuIb, nuMo, TIbMo, mIbMo, mMoIb),
     ns, pts):
     """
     nuIb: Iberian population size
