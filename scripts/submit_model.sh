@@ -1,9 +1,9 @@
 #!/bin/bash -l
-#SBATCH -D $HOME/AtCanary/scripts
-#SBATCH -o $HOME/AtCanary/results/%j-out.txt
-#SBATCH -e $HOME/AtCanary/results/%j-err.txt
+#SBATCH -D /home/lv70590/Arun/AtCanary/scripts
+#SBATCH -o /home/lv70590/Arun/AtCanary/results/%j-out.txt
+#SBATCH -e /home/lv70590/Arun/AtCanary/results/%j-err.txt
 #SBATCH -J dadi
-#SBATCH -p idle_0064
+#SBATCH -p mem_0064
 set -e
 set -u
 
